@@ -1,0 +1,151 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Friendship Day Nicky 💖</title>
+  <link rel="stylesheet" href="style1.css">
+  <script defer src="script1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <style>
+    .balloon {
+      position: absolute;
+      width: 50px;
+      height: 70px;
+      background-image: url('11467061.png');
+      background-size: cover;
+      animation: floatUp 10s linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    function createBalloon() {
+      const balloon = document.createElement('div');
+      balloon.classList.add('balloon');
+      balloon.style.left = Math.random() * 100 + 'vw';
+      balloon.style.animationDuration = (8 + Math.random() * 4) + 's';
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 12000);
+    }
+    setInterval(createBalloon, 600);
+  </script>
+
+  <script>
+    function firecracker() {
+      const duration = 10 * 1000;
+      const animationEnd = Date.now() + duration;
+      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function () {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        confetti({
+          ...defaults,
+          particleCount: 100,
+          origin: {
+            x: randomInRange(0.1, 0.9),
+            y: Math.random() - 0.2
+          }
+        });
+      }, 250);
+    }
+
+    // Trigger firecracker on page load
+    window.onload = firecracker;
+  </script>
+  <div id="welcome-screen" style="position: fixed; top: 0; left: 0; 
+  width: 100vw; height: 100vh; background: rgba(255,255,255,0.9);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999;">
+  <h2>💖 Click to Begin the Friendship Surprise 💖</h2>
+  <button onclick="startSurprise()" style="padding: 15px 30px; font-size: 20px; border-radius: 10px; background: #ec407a; color: white; border: none;">Start 🎶</button>
+</div>
+
+  <h1>🎉 Happy Friendship Day, Nicky! 🎉</h1>
+
+  <div class="carousel-container">
+    <div class="carousel" id="carousel">
+      <img src="pic1.jpg" alt="">
+      <img src="pic2.jpg" alt="">
+      <img src="pic3.jpg" alt="">
+      <img src="pic4.jpg" alt="">
+      <img src="pic5.jpg" alt="">
+      <img src="pic6.jpg" alt="">
+      <img src="pic7.jpg" alt="">
+      <img src="pic8.jpg" alt="">
+      <img src="pic9.jpg" alt="">
+    </div>
+  </div>
+
+  <button class="toggle-btn" onclick="toggleRotation()">⏯️ Pause/Play</button>
+  </div>
+
+  <div class="cake1">
+    <img src="cake1.jpeg" alt="Cake GIF" width="180">
+  </div>
+
+  <div class="secret-msg-box">
+    <p>Wanna read something special? 🥹</p>
+    <input type="password" id="secret-password" placeholder="Enter password">
+    <button onclick="checkPassword()">Unlock 💌</button>
+  </div>
+
+    <audio id="bg-music" loop>
+  <source src="janeKyun.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  function startSurprise() {
+    // Hide the welcome screen
+    document.getElementById("welcome-screen").style.display = "none";
+
+    // Start background music
+    const music = document.getElementById("bg-music");
+    music.play();
+
+    // Trigger confetti
+    firecracker();
+  }
+</script>
+  <script>
+    function toggleRotation() {
+      const carousel = document.getElementById("carousel");
+      carousel.classList.toggle("paused");
+    }
+
+    
+    function checkPassword() {
+      const input = document.getElementById("secret-password").value;
+      if (input.toLowerCase() === "nrs") {
+        const music = document.getElementById("bg-music");
+        sessionStorage.setItem("musicTime", music.currentTime);  // Save current time
+        window.location.href = "secret.html";
+      } else {
+        alert("Wrong password!");
+      }
+    }
+  </script>
+</body>
+</html>
